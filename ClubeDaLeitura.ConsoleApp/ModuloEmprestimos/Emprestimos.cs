@@ -1,4 +1,4 @@
 ﻿namespace ClubeDaLeitura.ConsoleApp.ModuloEmprestimos;
-class Emprestimos
+public class Emprestimos
 {
 }
