@@ -6,6 +6,12 @@ public class Program
 {
     static void Main(string[] args)
     {
+        RepositorioAmigos repositorioAmigos = new RepositorioAmigos();
+
+
+        TelaAmigos telaAmigos = new TelaAmigos(repositorioAmigos);
+
+
         TelaPrincipal telaPrincipal = new TelaPrincipal();
 
         while (true)
@@ -14,14 +20,19 @@ public class Program
 
             if (opcaoPrincipal == '1') // Amigos
             {
-                char opcaoEscolhida = '2';
+                char opcaoEscolhida = telaAmigos.ExibirMenu();
 
                 switch (opcaoEscolhida)
                 {
-                    case '2': 
-                        TelaAmigos telaAmigos = new TelaAmigos();
-                        telaAmigos.ExibirMenu();
-                        break;
+                    case '1': telaAmigos.RegistrarAmigo(); break;
+
+                    case '2': telaAmigos.EditarAmigo(); break;
+
+                    case '3': telaAmigos.ExcluirAmigo(); break;
+
+                    case '4': telaAmigos.VisualizarAmigos(false); break;
+
+                    case '5': telaAmigos.EmprestimosAmigo(); break; // fazer o metodo, puxar emprestimos??
                 }
                    
             }
@@ -33,7 +44,6 @@ public class Program
                 switch (opcaoEscolhida)
                 {
                     case '2':
-                        TelaAmigos telaAmigos = new TelaAmigos();
                         telaAmigos.ExibirMenu();
                         break;
                 }
@@ -47,7 +57,6 @@ public class Program
                 switch (opcaoEscolhida)
                 {
                     case '2':
-                        TelaAmigos telaAmigos = new TelaAmigos();
                         telaAmigos.ExibirMenu();
                         break;
                 }
@@ -61,7 +70,6 @@ public class Program
                 switch (opcaoEscolhida)
                 {
                     case '2':
-                        TelaAmigos telaAmigos = new TelaAmigos();
                         telaAmigos.ExibirMenu();
                         break;
                 }

@@ -3,30 +3,33 @@
 namespace ClubeDaLeitura.ConsoleApp.ModuloAmigos;
 public class Amigos
 {
+    public int Id;
     public string Nome;
     public string Responsavel;
     public string Telefone;
     public Emprestimos[] Emprestimos;
 
 
-    public Amigos(string nome, string responsavel, string telefone)
+    public Amigos(string nome, string responsavel, string telefone) // ,Emprestimos emprestimos)
     {
         Nome = nome;
         Responsavel = responsavel;
         Telefone = telefone;
+        // Emprestimos = emprestimos;
+
     }
 
     public string Validar()
     {
         string erros = "";
 
-        if (string.IsNullOrEmpty(Nome))
-            erros += "O campo 'Nome' é obrigatório.\n";
+        if (Nome.Length < 3 || Nome.Length > 100)
+            erros += "O campo 'Nome' deve contar no mínimo 3 letras.\n";
 
-        if (string.IsNullOrEmpty(Responsavel))
-            erros += "O campo 'Responsável' é obrigatório.\n";
+        if (Responsavel.Length < 3 || Responsavel.Length > 100)
+            erros += "O campo 'Responsavel' deve contar no mínimo 3 letras.\n";
 
-        if (Telefone.Length < 12)
+        if (Telefone.Length < 10)
             erros += "O campo 'Telefone' deve seguir o formato (XX) XXXX-XXXX.\n";
 
         return erros;
