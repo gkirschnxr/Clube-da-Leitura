@@ -1,4 +1,6 @@
-﻿using ClubeDaLeitura.ConsoleApp.ModuloAmigos;
+﻿using ClubeDaLeitura.ConsoleApp.Compartilhado;
+using ClubeDaLeitura.ConsoleApp.ModuloAmigos;
+using System.Reflection.Metadata.Ecma335;
 
 namespace ClubeDaLeitura.ConsoleApp.ModuloCaixas;
 public class TelaCaixas
@@ -52,12 +54,24 @@ public class TelaCaixas
         MostrarCabecalho();
 
         Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.WriteLine("\nCadastrando novo amigo...");
+        Console.WriteLine("\nCadastrando nova caixa...");
         Console.WriteLine("-----------------------------------\n");
         Console.ResetColor();
 
-        Caixas novaCaixa = new Caixas();
+        Caixas novaCaixa = ObterDadosCaixa();
 
+        string erros = novaCaixa.Validar();
+
+        if (erros.Length > 0)
+        {
+            Notificador.ExibirMensagem("Houve um erro durante o registro da Caixa", ConsoleColor.Red);
+
+            RegistrarCaixa();
+
+            return;
+        }
+
+        Notificador.ExibirMensagem("Caixa adicionada com sucesso!", ConsoleColor.Green);
     }
 
     public void EditarCaixa()
@@ -74,8 +88,41 @@ public class TelaCaixas
     {
         throw new NotImplementedException();
     }
-    public void ObterDadosCaixa()
-    {
 
+    public Caixas ObterDadosCaixa()
+    {
+        Console.WriteLine("Digite a etiqueta da caixa: ");
+        string etiqueta = Console.ReadLine()!;
+
+        Console.WriteLine("Qual será a cor da caixa? ");
+        ConsoleColor[] cores = (ConsoleColor[])ConsoleColor.GetValues(typeof(ConsoleColor));
+
+        for (int i = 0; i < cores.Length; i++)
+        {
+            Console.ForegroundColor = cores[i];
+            Console.WriteLine($"{i}: {cores[i]}");
+        }
+
+        Console.ResetColor();
+        Console.WriteLine("Selecione o número da cor ");
+        string corInput = Console.ReadLine()!;
+
+        if (int.TryParse(corInput, out int escolha) && escolha >= 0 && escolha < cores.Length)
+        {
+            ConsoleColor corEscolhida = cores[escolha];
+
+            Console.ForegroundColor = corEscolhida;
+            Console.WriteLine($"\nVocê escolheu: {corEscolhida}");
+            Console.ResetColor();
+
+        }
+        else Console.WriteLine("Escolha inválida.");
+
+        Console.WriteLine("Digite os dias de empréstimo da caixa: ");
+        string diasEmprestimo = Console.ReadLine()!;
+
+        Caixas caixa = new Caixas(etiqueta, corInput, diasEmprestimo);
+
+        return caixa;
     }
 }
