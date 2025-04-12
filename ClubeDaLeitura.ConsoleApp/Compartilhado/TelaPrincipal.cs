@@ -4,18 +4,28 @@ class TelaPrincipal
     public char MenuPrincipal()
     {
         Console.Clear();
-        Console.WriteLine("\nBem vindo ao Clube da Leitura do Gustavo!\n");
 
-        Console.WriteLine("O que deseja fazer hoje? \n");
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        Console.WriteLine("╔══════════════════════════════════════════════════╗");
+        Console.WriteLine("║       Bem vindo ao Clube da Leitura do Gustavo   ║");
+        Console.WriteLine("╚══════════════════════════════════════════════════╝");
+        Console.ResetColor();
 
-        Console.WriteLine("\t1 - Gerenciar Amigos");
-        Console.WriteLine("\t2 - Gerenciar Caixas");
-        Console.WriteLine("\t3 - Gerenciar Revistas");
-        Console.WriteLine("\t4 - Gerenciar Empréstimos");
+        Console.WriteLine("\nO que deseja fazer hoje?\n");
+
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine("  [1] Gerenciar Amigos");
+        Console.WriteLine("  [2] Gerenciar Caixas");
+        Console.WriteLine("  [3] Gerenciar Revistas");
+        Console.WriteLine("  [4] Gerenciar Empréstimos");
+        Console.ResetColor();
 
         Console.Write("\nSelecione uma das opções acima: ");
-        char opcaoEscolhida = Console.ReadLine()![0]; //nao fechar programa ao digitar zzero
+        string entrada = Console.ReadLine()!;
 
-        return opcaoEscolhida;
+        if (string.IsNullOrWhiteSpace(entrada))
+            return ' ';
+
+        return char.ToUpper(entrada[0]);
     }
 }

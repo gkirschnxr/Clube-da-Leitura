@@ -1,4 +1,4 @@
 ﻿namespace ClubeDaLeitura.ConsoleApp.ModuloCaixas;
-class RepositorioCaixas
+public class RepositorioCaixas
 {
 }

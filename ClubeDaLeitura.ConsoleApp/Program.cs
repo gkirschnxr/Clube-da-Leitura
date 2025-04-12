@@ -1,16 +1,20 @@
 ﻿using ClubeDaLeitura.ConsoleApp.Compartilhado;
 using ClubeDaLeitura.ConsoleApp.ModuloAmigos;
+using ClubeDaLeitura.ConsoleApp.ModuloCaixas;
 
 namespace ClubeDaLeitura.ConsoleApp;
 public class Program
 {
     static void Main(string[] args)
     {
+        Console.OutputEncoding = System.Text.Encoding.UTF8;
+
         RepositorioAmigos repositorioAmigos = new RepositorioAmigos();
+        RepositorioCaixas repositorioCaixas = new RepositorioCaixas();
 
 
         TelaAmigos telaAmigos = new TelaAmigos(repositorioAmigos);
-
+        TelaCaixas telaCaixas = new TelaCaixas(repositorioCaixas);
 
         TelaPrincipal telaPrincipal = new TelaPrincipal();
 
@@ -39,13 +43,17 @@ public class Program
 
             if (opcaoPrincipal == '2') // Caixas
             {
-                char opcaoEscolhida = '2';
+                char opcaoEscolhida = telaCaixas.ExibirMenu();
 
                 switch (opcaoEscolhida)
                 {
-                    case '2':
-                        telaAmigos.ExibirMenu();
-                        break;
+                    case '1': telaCaixas.RegistrarCaixa(); break;
+
+                    case '2': telaCaixas.EditarCaixa(); break;
+
+                    case '3': telaCaixas.ExcluirCaixa(); break;
+
+                    case '4': telaCaixas.VisualizarCaixas(false); break;
                 }
 
             }
