@@ -72,6 +72,8 @@ public class TelaCaixas
             return;
         }
 
+        repositorioCaixas.CadastrarCaixa(novaCaixa);
+
         Notificador.ExibirMensagem("Caixa adicionada com sucesso!", ConsoleColor.Green);
     }
 

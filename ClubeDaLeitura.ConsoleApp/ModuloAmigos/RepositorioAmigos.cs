@@ -42,13 +42,13 @@ public class RepositorioAmigos
     {
         for (int i = 0; i < amigos.Length; i++)
         {
-            Amigos e = amigos[i];
+            Amigos a = amigos[i];
 
-            if (e == null)
+            if (a == null)
                 continue;
 
-            else if (e.Id == idAmigo)
-                return e;
+            else if (a.Id == idAmigo)
+                return a;
         }
 
         return null!;

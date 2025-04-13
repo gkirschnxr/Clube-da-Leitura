@@ -1,26 +1,65 @@
 ﻿
+using ClubeDaLeitura.ConsoleApp.Compartilhado;
 using ClubeDaLeitura.ConsoleApp.ModuloAmigos;
 
 namespace ClubeDaLeitura.ConsoleApp.ModuloCaixas;
 public class RepositorioCaixas
 {
-    public bool EditarCaixa(int idSelecionado, object amigoEditado)
+    public Caixas[] caixas = new Caixas[100];
+    public int contadorCaixas = 0;
+    public void CadastrarCaixa(Caixas novaCaixa)
     {
-        throw new NotImplementedException();
+        novaCaixa.Id = GeradorDeIDs.GerarIdCaixas();
+
+        caixas[contadorCaixas++] = novaCaixa;
+    }
+    public bool EditarCaixa(int idCaixa, Caixas editarCaixa)
+    {
+        for (int i = 0; i < caixas.Length; i++)
+        {
+            if (caixas[i] == null!) continue;
+
+            else if (caixas[i].Id == idCaixa)
+            {
+                caixas[i].Etiqueta = editarCaixa.Etiqueta;
+                caixas[i].Cor = editarCaixa.Cor;
+                caixas[i].Dias = editarCaixa.Dias;
+
+                return true;
+            }
+        }
+        return false;
     }
 
-    public bool ExcluirCaixa(int idSelecionado)
+    public bool ExcluirCaixa(int idCaixa)
     {
-        throw new NotImplementedException();
+        for (int i = 0; i < caixas.Length; i++)
+        {
+            if (caixas[i] == null!) continue;
+
+            else if (caixas[i].Id == idCaixa) caixas[i] = null!;
+            return true;
+        }
+        return false;
     }
 
     public Caixas[] SelecionarCaixa()
     {
-        throw new NotImplementedException();
+        return caixas;
     }
 
-    public Caixas SelecionarCaixaPorId(int idSelecionado)
+    public Caixas SelecionarCaixaPorId(int idCaixa)
     {
-        throw new NotImplementedException();
+        for (int i = 0; i < caixas.Length; i++)
+        {
+            Caixas c = caixas[i];
+
+            if (c == null) continue;
+
+            else if (c.Id == idCaixa) return c;
+        }
+        return null!;
     }
+
+
 }
