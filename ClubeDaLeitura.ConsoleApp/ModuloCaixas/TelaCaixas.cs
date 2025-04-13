@@ -1,6 +1,7 @@
 ﻿using ClubeDaLeitura.ConsoleApp.Compartilhado;
 using ClubeDaLeitura.ConsoleApp.ModuloAmigos;
 using System.Reflection.Metadata.Ecma335;
+using System.Reflection.PortableExecutable;
 
 namespace ClubeDaLeitura.ConsoleApp.ModuloCaixas;
 public class TelaCaixas
@@ -76,17 +77,95 @@ public class TelaCaixas
 
     public void EditarCaixa()
     {
-        throw new NotImplementedException();
+        MostrarCabecalho();
+
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine("\nEditando caixa...");
+        Console.WriteLine("-----------------------------------\n");
+        Console.ResetColor();
+
+        Console.Write("Digite o ID da caixa que deseja editar: ");
+        int idSelecionado = Convert.ToInt32(Console.ReadLine());
+
+        Caixas caixaEditada = ObterDadosCaixa();
+
+        bool conseguiuEditar = repositorioCaixas.EditarCaixa(idSelecionado, caixaEditada);
+
+        if (!conseguiuEditar)
+        {
+            Notificador.ExibirMensagem("Houve um erro durante a edição da caixa", ConsoleColor.Red);
+
+            return;
+        }
+
+        Notificador.ExibirMensagem("Caixa editada com sucesso", ConsoleColor.Green);
     }
 
     public void ExcluirCaixa()
     {
-        throw new NotImplementedException();
+        MostrarCabecalho();
+
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine("\nExcluindo caixa...");
+        Console.WriteLine("-----------------------------------\n");
+        Console.ResetColor();
+
+        VisualizarCaixas(true);
+
+        Console.Write("Digite o ID do amigo que deseja excluir: ");
+        int idSelecionado = Convert.ToInt32(Console.ReadLine());
+
+        Caixas caixaExcluida = repositorioCaixas.SelecionarCaixaPorId(idSelecionado);
+
+        bool conseguiuExcluir = repositorioCaixas.ExcluirCaixa(idSelecionado);
+
+        if (caixaExcluida == null)
+        {
+            Notificador.ExibirMensagem("Caixa não encontrada", ConsoleColor.Red);
+            return;
+        }
+
+        Notificador.ExibirMensagem("Caixa excluída com sucesso", ConsoleColor.Green);
     }
 
-    public void VisualizarCaixas(bool v)
+    public void VisualizarCaixas(bool mostrarCaixas)
     {
-        throw new NotImplementedException();
+        if (mostrarCaixas == false)
+        {
+            MostrarCabecalho();
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\nVisualizando caixas...");
+            Console.WriteLine("-----------------------------------\n");
+            Console.ResetColor();
+        }
+
+        mostrarCaixas = true;
+        if (mostrarCaixas == true)
+        {
+            Console.WriteLine(
+            "{0, -5} | {1, -20} | {2, -20} | {3, -15}",
+            "ID", "Etiqueta:", "Cor", "Dias" // "Possui Empréstimos?"
+            );
+
+            Caixas[] caixasCadastradas = repositorioCaixas.SelecionarCaixa();
+
+            for (int i = 0; i < caixasCadastradas.Length; i++)
+            {
+                Caixas c = caixasCadastradas[i];
+
+                if (c == null) continue;
+
+                Console.ForegroundColor = (ConsoleColor)Enum.Parse(typeof(ConsoleColor), c.Cor);
+                Console.WriteLine(
+                    "{0, -5} | {1, -20} | {2, -20} | {3, -15}",
+                    c.Id, c.Etiqueta, c.Cor, c.Dias
+                    );
+                Console.ResetColor();
+            }
+
+            Notificador.ExibirMensagem("\nPressione ENTER para continuar...", ConsoleColor.Yellow);
+        }
     }
 
     public Caixas ObterDadosCaixa()
