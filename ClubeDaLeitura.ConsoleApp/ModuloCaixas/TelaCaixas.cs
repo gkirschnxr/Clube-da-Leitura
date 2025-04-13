@@ -72,8 +72,18 @@ public class TelaCaixas
             return;
         }
 
-        repositorioCaixas.CadastrarCaixa(novaCaixa);
+        repositorioCaixas.CadastrarCaixa(novaCaixa, erros);
 
+        if (erros.Length > 0)
+        {
+            Notificador.ExibirMensagem("Houve um erro durante o registro da Caixa", ConsoleColor.Red);
+
+            RegistrarCaixa();
+
+            return;
+        }
+
+        // nao consigo fazer aparecer a mensagem de erro ao digitar o mesmo nome na etiqueta :( so bad
         Notificador.ExibirMensagem("Caixa adicionada com sucesso!", ConsoleColor.Green);
     }
 
@@ -103,7 +113,7 @@ public class TelaCaixas
         Notificador.ExibirMensagem("Caixa editada com sucesso", ConsoleColor.Green);
     }
 
-    public void ExcluirCaixa()
+    public bool ExcluirCaixa()
     {
         MostrarCabecalho();
 
@@ -113,6 +123,7 @@ public class TelaCaixas
         Console.ResetColor();
 
         VisualizarCaixas(true);
+    
 
         Console.Write("Digite o ID do amigo que deseja excluir: ");
         int idSelecionado = Convert.ToInt32(Console.ReadLine());
@@ -121,13 +132,14 @@ public class TelaCaixas
 
         bool conseguiuExcluir = repositorioCaixas.ExcluirCaixa(idSelecionado);
 
-        if (caixaExcluida == null)
+        if (caixaExcluida == null || PossuiRevistasVinculadas(idSelecionado))
         {
-            Notificador.ExibirMensagem("Caixa não encontrada", ConsoleColor.Red);
-            return;
+            Notificador.ExibirMensagem("Caixa não encontrada ou possui revistas vinculadas", ConsoleColor.Red);
+            return false;
         }
 
         Notificador.ExibirMensagem("Caixa excluída com sucesso", ConsoleColor.Green);
+        return true;
     }
 
     public void VisualizarCaixas(bool mostrarCaixas)
@@ -147,7 +159,7 @@ public class TelaCaixas
         {
             Console.WriteLine(
             "{0, -5} | {1, -20} | {2, -20} | {3, -15}",
-            "ID", "Etiqueta:", "Cor", "Dias" // "Possui Empréstimos?"
+            "ID", "Etiqueta:", "N’ da Cor", "Dias de Empréstimo" // "Possui Empréstimos?"
             );
 
             Caixas[] caixasCadastradas = repositorioCaixas.SelecionarCaixa();
@@ -172,10 +184,10 @@ public class TelaCaixas
 
     public Caixas ObterDadosCaixa()
     {
-        Console.WriteLine("Digite a etiqueta da caixa: ");
+        Console.Write("Digite a etiqueta da caixa: ");
         string etiqueta = Console.ReadLine()!;
 
-        Console.WriteLine("Qual será a cor da caixa? ");
+        Console.Write("Qual será a cor da caixa? ");
         ConsoleColor[] cores = (ConsoleColor[])ConsoleColor.GetValues(typeof(ConsoleColor));
 
         for (int i = 0; i < cores.Length; i++)
@@ -185,7 +197,7 @@ public class TelaCaixas
         }
 
         Console.ResetColor();
-        Console.WriteLine("Selecione o número da cor ");
+        Console.Write("Selecione o número da cor ");
         string corInput = Console.ReadLine()!;
 
         if (int.TryParse(corInput, out int escolha) && escolha >= 0 && escolha < cores.Length)
@@ -199,11 +211,23 @@ public class TelaCaixas
         }
         else Console.WriteLine("Escolha inválida.");
 
-        Console.WriteLine("Digite os dias de empréstimo da caixa: ");
+        Console.Write("Digite os dias de empréstimo da caixa (pressione ENTER para usar o padrão de 7 dias): ");
         string diasEmprestimo = Console.ReadLine()!;
+
+        if (string.IsNullOrWhiteSpace(diasEmprestimo))
+        {
+            diasEmprestimo = "7";
+            Console.WriteLine("Nenhum valor inserido. O prazo padrão de 7 dias foi atribuído.");
+        }
 
         Caixas caixa = new Caixas(etiqueta, corInput, diasEmprestimo);
 
         return caixa;
+    }
+    public bool PossuiRevistasVinculadas(int idCaixa)
+    {
+        // Aqui você deve implementar a lógica para verificar se há revistas associadas à caixa
+        // Exemplo: Verificar em uma lista de revistas se alguma está vinculada à caixa
+        return false; // Substitua pela lógica real
     }
 }

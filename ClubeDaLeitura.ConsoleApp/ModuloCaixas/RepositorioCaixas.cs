@@ -7,11 +7,22 @@ public class RepositorioCaixas
 {
     public Caixas[] caixas = new Caixas[100];
     public int contadorCaixas = 0;
-    public void CadastrarCaixa(Caixas novaCaixa)
+    public void CadastrarCaixa(Caixas novaCaixa, string erros)
     {
-        novaCaixa.Id = GeradorDeIDs.GerarIdCaixas();
-
-        caixas[contadorCaixas++] = novaCaixa;
+        foreach (Caixas caixa in caixas)
+        {
+            if (caixa != null && caixa.Etiqueta == novaCaixa.Etiqueta)
+            {
+                erros += "Já existe uma etiqueta com esse nome";
+                break;
+            }
+            else
+            {
+                novaCaixa.Id = GeradorDeIDs.GerarIdCaixas();
+                caixas[contadorCaixas++] = novaCaixa;
+                break;
+            }
+        }
     }
     public bool EditarCaixa(int idCaixa, Caixas editarCaixa)
     {
