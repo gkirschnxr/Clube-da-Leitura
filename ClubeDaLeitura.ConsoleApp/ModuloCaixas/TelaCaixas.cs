@@ -125,7 +125,7 @@ public class TelaCaixas
         VisualizarCaixas(true);
     
 
-        Console.Write("Digite o ID do amigo que deseja excluir: ");
+        Console.Write("Digite o ID da caixa que deseja excluir: ");
         int idSelecionado = Convert.ToInt32(Console.ReadLine());
 
         Caixas caixaExcluida = repositorioCaixas.SelecionarCaixaPorId(idSelecionado);
@@ -224,10 +224,13 @@ public class TelaCaixas
 
         return caixa;
     }
+
     public bool PossuiRevistasVinculadas(int idCaixa)
     {
         // Aqui você deve implementar a lógica para verificar se há revistas associadas à caixa
         // Exemplo: Verificar em uma lista de revistas se alguma está vinculada à caixa
         return false; // Substitua pela lógica real
     }
+
+
 }

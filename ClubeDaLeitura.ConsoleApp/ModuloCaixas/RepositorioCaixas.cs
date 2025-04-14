@@ -1,5 +1,4 @@
-﻿
-using ClubeDaLeitura.ConsoleApp.Compartilhado;
+﻿using ClubeDaLeitura.ConsoleApp.Compartilhado;
 using ClubeDaLeitura.ConsoleApp.ModuloAmigos;
 
 namespace ClubeDaLeitura.ConsoleApp.ModuloCaixas;
@@ -7,6 +6,15 @@ public class RepositorioCaixas
 {
     public Caixas[] caixas = new Caixas[100];
     public int contadorCaixas = 0;
+
+    public static Caixas CaixaPadrao = new Caixas("Padrão", "15", "7");
+
+    public RepositorioCaixas()
+    {
+        CaixaPadrao.Id = GeradorDeIDs.GerarIdCaixas();
+        caixas[contadorCaixas++] = CaixaPadrao;
+    }
+
     public void CadastrarCaixa(Caixas novaCaixa, string erros)
     {
         foreach (Caixas caixa in caixas)
@@ -71,6 +79,7 @@ public class RepositorioCaixas
         }
         return null!;
     }
+
 
 
 }

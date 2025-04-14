@@ -1,6 +1,7 @@
 ﻿using ClubeDaLeitura.ConsoleApp.Compartilhado;
 using ClubeDaLeitura.ConsoleApp.ModuloAmigos;
 using ClubeDaLeitura.ConsoleApp.ModuloCaixas;
+using ClubeDaLeitura.ConsoleApp.ModuloRevistas;
 
 namespace ClubeDaLeitura.ConsoleApp;
 public class Program
@@ -11,10 +12,12 @@ public class Program
 
         RepositorioAmigos repositorioAmigos = new RepositorioAmigos();
         RepositorioCaixas repositorioCaixas = new RepositorioCaixas();
+        RepositorioRevistas repositorioRevistas = new RepositorioRevistas();
 
 
         TelaAmigos telaAmigos = new TelaAmigos(repositorioAmigos);
         TelaCaixas telaCaixas = new TelaCaixas(repositorioCaixas);
+        TelaRevistas telaRevistas = new TelaRevistas(repositorioRevistas, repositorioCaixas);
 
         TelaPrincipal telaPrincipal = new TelaPrincipal();
 
@@ -60,13 +63,19 @@ public class Program
 
             if (opcaoPrincipal == '3') // Revistas
             {
-                char opcaoEscolhida = '2';
+                char opcaoEscolhida = telaRevistas.ExibirMenu();
 
                 switch (opcaoEscolhida)
                 {
-                    case '2':
-                        telaAmigos.ExibirMenu();
-                        break;
+                    case '1': telaRevistas.RegistrarRevista(); break;
+
+                    case '2': telaRevistas.EditarRevista(); break;
+
+                    case '3': telaRevistas.ExcluirRevista(); break;
+
+                    case '4': telaRevistas.VisualizarRevista(false); break;
+
+                    case '5': telaRevistas.AlterarStatusRevista(); break;
                 }
 
             }
