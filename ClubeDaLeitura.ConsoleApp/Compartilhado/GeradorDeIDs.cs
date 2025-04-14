@@ -4,6 +4,7 @@ public static class GeradorDeIDs
     public static int IdAmigos;
     public static int IdCaixas;
     public static int IdRevistas;
+    public static int IdEmprestimos;
 
     public static int GerarIdAmigos()
     {
@@ -11,16 +12,24 @@ public static class GeradorDeIDs
 
         return IdAmigos;
     }
+
     public static int GerarIdCaixas()
     {
         IdCaixas++;
 
         return IdCaixas;
     }
+
     public static int GerarIdRevistas()
     {
         IdRevistas++;
 
         return IdRevistas;
+    }
+
+    public static int GerarIdEmprestimos()
+    {
+        IdEmprestimos++;
+        return IdEmprestimos;
     }
 }

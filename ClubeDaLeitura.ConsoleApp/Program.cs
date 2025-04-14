@@ -1,6 +1,7 @@
 ﻿using ClubeDaLeitura.ConsoleApp.Compartilhado;
 using ClubeDaLeitura.ConsoleApp.ModuloAmigos;
 using ClubeDaLeitura.ConsoleApp.ModuloCaixas;
+using ClubeDaLeitura.ConsoleApp.ModuloEmprestimos;
 using ClubeDaLeitura.ConsoleApp.ModuloRevistas;
 
 namespace ClubeDaLeitura.ConsoleApp;
@@ -13,11 +14,13 @@ public class Program
         RepositorioAmigos repositorioAmigos = new RepositorioAmigos();
         RepositorioCaixas repositorioCaixas = new RepositorioCaixas();
         RepositorioRevistas repositorioRevistas = new RepositorioRevistas();
+        RepositorioEmprestimos repositorioEmprestimos = new RepositorioEmprestimos();
 
 
         TelaAmigos telaAmigos = new TelaAmigos(repositorioAmigos);
         TelaCaixas telaCaixas = new TelaCaixas(repositorioCaixas);
         TelaRevistas telaRevistas = new TelaRevistas(repositorioRevistas, repositorioCaixas);
+        TelaEmprestimos telaEmprestimos = new TelaEmprestimos(repositorioEmprestimos, repositorioAmigos, repositorioRevistas);
 
         TelaPrincipal telaPrincipal = new TelaPrincipal();
 
@@ -82,23 +85,18 @@ public class Program
 
             if (opcaoPrincipal == '4') // Empréstimos
             {
-                char opcaoEscolhida = '2';
+                char opcaoEscolhida = telaEmprestimos.ExibirMenu();
 
                 switch (opcaoEscolhida)
                 {
-                    case '2':
-                        telaAmigos.ExibirMenu();
-                        break;
+                    case '1': telaEmprestimos.RegistrarEmprestimo(); break;
+
+                    case '2': telaEmprestimos.DevolucaoEmprestimo(); break;
+
+                    case '3': telaEmprestimos.VisualizarEmprestimo(); break;
                 }
 
             }
         }
-
-
-
-
-
-
-        Console.ReadLine();
     }
 }
