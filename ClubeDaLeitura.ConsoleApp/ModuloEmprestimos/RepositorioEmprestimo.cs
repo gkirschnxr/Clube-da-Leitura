@@ -1,26 +1,26 @@
 ﻿using ClubeDaLeitura.ConsoleApp.Compartilhado;
 
 namespace ClubeDaLeitura.ConsoleApp.ModuloEmprestimos;
-public class RepositorioEmprestimos
+public class RepositorioEmprestimo
 {
-    public Emprestimos[] emprestimos = new Emprestimos[100];
+    public Emprestimo[] emprestimos = new Emprestimo[100];
     public int contadorEmprestimos = 0;
-    public void CadastrarEmprestimo(Emprestimos novoEmprestimo)
+    public void CadastrarEmprestimo(Emprestimo novoEmprestimo)
     {
         novoEmprestimo.Id = GeradorDeIDs.GerarIdEmprestimos();
         emprestimos[contadorEmprestimos++] = novoEmprestimo;
     }
 
-    public Emprestimos[] SelecionarEmprestimo()
+    public Emprestimo[] SelecionarEmprestimo()
     {
         return emprestimos;
     }
 
-    public Emprestimos SelecionarEmprestimoPorId(int idEmprestimo)
+    public Emprestimo SelecionarEmprestimoPorId(int idEmprestimo)
     {
         for (int i = 0; i < emprestimos.Length; i++)
         {
-            Emprestimos e = emprestimos[i];
+            Emprestimo e = emprestimos[i];
             if (e == null)
                 continue;
             else if (e.Id == idEmprestimo)
@@ -33,7 +33,7 @@ public class RepositorioEmprestimos
     {
         for (int i = 0; i < emprestimos.Length; i++)
         {
-            Emprestimos e = emprestimos[i];
+            Emprestimo e = emprestimos[i];
             if (e == null)
                 continue;
             else if (e.StatusEmprestimo == "Aberto")
@@ -42,4 +42,7 @@ public class RepositorioEmprestimos
     }
 
     public void VisualizarEmprestimos()
+    {
+
+    }
 }

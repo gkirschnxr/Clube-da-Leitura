@@ -1,16 +1,16 @@
 ﻿using ClubeDaLeitura.ConsoleApp.ModuloEmprestimos;
 
 namespace ClubeDaLeitura.ConsoleApp.ModuloAmigos;
-public class Amigos
+public class Amigo
 {
     public int Id;
     public string Nome;
     public string Responsavel;
     public string Telefone;
-    public Emprestimos[] Emprestimos;
+    public Emprestimo[] Emprestimos;
 
 
-    public Amigos(string nome, string responsavel, string telefone) // ,Emprestimos emprestimos)
+    public Amigo(string nome, string responsavel, string telefone) // ,Emprestimos emprestimos)
     {
         Nome = nome;
         Responsavel = responsavel;
@@ -35,17 +35,15 @@ public class Amigos
         return erros;
     }
 
-    public int ObterEmprestimos()
+    // bug
+    public string TemEmprestimosAtivos()
     {
-        int contador = 0;
-
-        for (int i = 0; i < Emprestimos.Length; i++)
+        foreach (var emprestimo in Emprestimos)
         {
-            if (Emprestimos[i] != null)
-                contador++;
+            if (emprestimo != null && emprestimo.StatusEmprestimo != "Devolvido")
+                return "Sim";
         }
-
-        return contador;
+        return "Não";
     }
 
 

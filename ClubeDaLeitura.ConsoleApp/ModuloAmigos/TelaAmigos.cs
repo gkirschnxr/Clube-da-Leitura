@@ -3,9 +3,9 @@
 namespace ClubeDaLeitura.ConsoleApp.ModuloAmigos;
 public class TelaAmigos
 {
-    public RepositorioAmigos repositorioAmigos;
+    public RepositorioAmigo repositorioAmigos;
 
-    public TelaAmigos(RepositorioAmigos repositorioAmigos)
+    public TelaAmigos(RepositorioAmigo repositorioAmigos)
     {
         this.repositorioAmigos = repositorioAmigos;
     }
@@ -59,7 +59,7 @@ public class TelaAmigos
         Console.WriteLine("-----------------------------------\n");
         Console.ResetColor();
 
-        Amigos novoAmigo = ObterDadosAmigo();
+        Amigo novoAmigo = ObterDadosAmigo();
 
         string erros = novoAmigo.Validar();
 
@@ -89,7 +89,7 @@ public class TelaAmigos
         Console.Write("Digite o ID do amigo que deseja editar: ");
         int idSelecionado = Convert.ToInt32(Console.ReadLine());
 
-        Amigos amigoEditado = ObterDadosAmigo();
+        Amigo amigoEditado = ObterDadosAmigo();
 
         bool conseguiuEditar = repositorioAmigos.EditarAmigo(idSelecionado, amigoEditado);
 
@@ -117,7 +117,7 @@ public class TelaAmigos
         Console.Write("Digite o ID do amigo que deseja excluir: ");
         int idSelecionado = Convert.ToInt32(Console.ReadLine());
 
-        Amigos amigoExcluido = repositorioAmigos.SelecionarAmigoPorId(idSelecionado);
+        Amigo amigoExcluido = repositorioAmigos.SelecionarAmigoPorId(idSelecionado);
 
         bool conseguiuExcluir = repositorioAmigos.ExcluirAmigo(idSelecionado);
 
@@ -146,28 +146,28 @@ public class TelaAmigos
         if (mostrarAmigos == true)
         {
             Console.WriteLine(
-            "{0, -5} | {1, -20} | {2, -20} | {3, -15}",
-            "ID", "Nome:", "Responsável", "Telefone" // "Possui Empréstimos?"
+            "{0, -5} | {1, -20} | {2, -20} | {3, -15} | {4, -15}",
+            "ID", "Nome:", "Responsável", "Telefone", "Possui Empréstimos?"
             );
 
-            Amigos[] amigosCadastrados = repositorioAmigos.SelecionarAmigo();
+            Amigo[] amigosCadastrados = repositorioAmigos.SelecionarAmigo();
 
             for (int i = 0; i < amigosCadastrados.Length; i++)
             {
-                Amigos a = amigosCadastrados[i];
+                Amigo a = amigosCadastrados[i];
 
                 if (a == null) continue;
 
                 Console.WriteLine(
-                    "{0, -5} | {1, -20} | {2, -20} | {3, -15}",
-                    a.Id, a.Nome, a.Responsavel, a.Telefone  // a.ObterEmprestimos() // validar quantos emprestimos possui? atraso?
+                    "{0, -5} | {1, -20} | {2, -20} | {3, -15} | {4, -15}",
+                    a.Id, a.Nome, a.Responsavel, a.Telefone, a.TemEmprestimosAtivos() // validar quantos emprestimos possui? atraso?
                     );
             }
 
             Notificador.ExibirMensagem("\nPressione ENTER para continuar...", ConsoleColor.Yellow);
         }
     }
-    public Amigos ObterDadosAmigo()
+    public Amigo ObterDadosAmigo()
     {
         Console.Write("Digite o nome do amigo: ");
         string nome = Console.ReadLine()!;
@@ -178,7 +178,7 @@ public class TelaAmigos
         Console.Write("Digite o telefone do amigo: ");
         string telefone = Console.ReadLine()!;
 
-        Amigos amigo = new Amigos(nome, responsavel, telefone);
+        Amigo amigo = new Amigo(nome, responsavel, telefone);
 
         return amigo;
     }

@@ -2,19 +2,19 @@
 using ClubeDaLeitura.ConsoleApp.Compartilhado;
 
 namespace ClubeDaLeitura.ConsoleApp.ModuloAmigos;
-public class RepositorioAmigos
+public class RepositorioAmigo
 {
-    public Amigos[] amigos = new Amigos[100];
+    public Amigo[] amigos = new Amigo[100];
     public int contadorAmigos = 0;
 
-    public void CadastrarAmigo(Amigos novoAmigo)
+    public void CadastrarAmigo(Amigo novoAmigo)
     {
         novoAmigo.Id = GeradorDeIDs.GerarIdAmigos();
 
         amigos[contadorAmigos++] = novoAmigo;
     }
 
-    public bool EditarAmigo(int idAmigo, Amigos editarAmigo)
+    public bool EditarAmigo(int idAmigo, Amigo editarAmigo)
     {
         for (int i = 0; i < amigos.Length; i++)
         {
@@ -33,16 +33,16 @@ public class RepositorioAmigos
         return false;
     }
 
-    public Amigos[] SelecionarAmigo()
+    public Amigo[] SelecionarAmigo()
     {
         return amigos;
     }
 
-    public Amigos SelecionarAmigoPorId(int idAmigo)
+    public Amigo SelecionarAmigoPorId(int idAmigo)
     {
         for (int i = 0; i < amigos.Length; i++)
         {
-            Amigos a = amigos[i];
+            Amigo a = amigos[i];
 
             if (a == null)
                 continue;

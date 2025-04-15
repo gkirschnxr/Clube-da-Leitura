@@ -6,8 +6,8 @@ using System.Reflection.PortableExecutable;
 namespace ClubeDaLeitura.ConsoleApp.ModuloCaixas;
 public class TelaCaixas
 {
-    public RepositorioCaixas repositorioCaixas;
-    public TelaCaixas(RepositorioCaixas repositorioCaixas)
+    public RepositorioCaixa repositorioCaixas;
+    public TelaCaixas(RepositorioCaixa repositorioCaixas)
     {
         this.repositorioCaixas = repositorioCaixas;
     }
@@ -59,7 +59,7 @@ public class TelaCaixas
         Console.WriteLine("-----------------------------------\n");
         Console.ResetColor();
 
-        Caixas novaCaixa = ObterDadosCaixa();
+        Caixa novaCaixa = ObterDadosCaixa();
 
         string erros = novaCaixa.Validar();
 
@@ -99,7 +99,7 @@ public class TelaCaixas
         Console.Write("Digite o ID da caixa que deseja editar: ");
         int idSelecionado = Convert.ToInt32(Console.ReadLine());
 
-        Caixas caixaEditada = ObterDadosCaixa();
+        Caixa caixaEditada = ObterDadosCaixa();
 
         bool conseguiuEditar = repositorioCaixas.EditarCaixa(idSelecionado, caixaEditada);
 
@@ -128,7 +128,7 @@ public class TelaCaixas
         Console.Write("Digite o ID da caixa que deseja excluir: ");
         int idSelecionado = Convert.ToInt32(Console.ReadLine());
 
-        Caixas caixaExcluida = repositorioCaixas.SelecionarCaixaPorId(idSelecionado);
+        Caixa caixaExcluida = repositorioCaixas.SelecionarCaixaPorId(idSelecionado);
 
         bool conseguiuExcluir = repositorioCaixas.ExcluirCaixa(idSelecionado);
 
@@ -162,11 +162,11 @@ public class TelaCaixas
             "ID", "Etiqueta:", "N’ da Cor", "Dias de Empréstimo" // "Possui Empréstimos?"
             );
 
-            Caixas[] caixasCadastradas = repositorioCaixas.SelecionarCaixa();
+            Caixa[] caixasCadastradas = repositorioCaixas.SelecionarCaixa();
 
             for (int i = 0; i < caixasCadastradas.Length; i++)
             {
-                Caixas c = caixasCadastradas[i];
+                Caixa c = caixasCadastradas[i];
 
                 if (c == null) continue;
 
@@ -182,7 +182,7 @@ public class TelaCaixas
         }
     }
 
-    public Caixas ObterDadosCaixa()
+    public Caixa ObterDadosCaixa()
     {
         Console.Write("Digite a etiqueta da caixa: ");
         string etiqueta = Console.ReadLine()!;
@@ -220,7 +220,7 @@ public class TelaCaixas
             Console.WriteLine("Nenhum valor inserido. O prazo padrão de 7 dias foi atribuído.");
         }
 
-        Caixas caixa = new Caixas(etiqueta, corInput, diasEmprestimo);
+        Caixa caixa = new Caixa(etiqueta, corInput, DateTime.Now.AddDays(7));
 
         return caixa;
     }

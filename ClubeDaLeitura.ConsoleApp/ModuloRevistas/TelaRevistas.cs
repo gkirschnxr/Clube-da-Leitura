@@ -5,9 +5,9 @@ using ClubeDaLeitura.ConsoleApp.ModuloCaixas;
 namespace ClubeDaLeitura.ConsoleApp.ModuloRevistas;
 public class TelaRevistas
 {
-    public RepositorioRevistas repositorioRevistas;
-    public RepositorioCaixas repositorioCaixas;
-    public TelaRevistas(RepositorioRevistas repositorioRevistas, RepositorioCaixas repositorioCaixas)
+    public RepositorioRevista repositorioRevistas;
+    public RepositorioCaixa repositorioCaixas;
+    public TelaRevistas(RepositorioRevista repositorioRevistas, RepositorioCaixa repositorioCaixas)
     {
         this.repositorioRevistas = repositorioRevistas;
         this.repositorioCaixas = repositorioCaixas;
@@ -62,7 +62,7 @@ public class TelaRevistas
         Console.WriteLine("-----------------------------------\n");
         Console.ResetColor();
 
-        Revistas novaRevista = ObterDadosRevista();
+        Revista novaRevista = ObterDadosRevista();
 
         string erros = novaRevista.Validar();
 
@@ -92,7 +92,7 @@ public class TelaRevistas
         Console.Write("Digite o ID da revista: ");
         int idSelecionado = Convert.ToInt32(Console.ReadLine());
 
-        Revistas revistaEditada = ObterDadosRevista();
+        Revista revistaEditada = ObterDadosRevista();
 
         bool conseguiuEditar = repositorioRevistas.EditarRevista(idSelecionado, revistaEditada);
 
@@ -120,7 +120,7 @@ public class TelaRevistas
         Console.Write("Digite o ID da revista que deseja excluir: ");
         int idSelecionado = Convert.ToInt32(Console.ReadLine());
 
-        Revistas revistaExcluida = repositorioRevistas.SelecionarRevistaPorId(idSelecionado);
+        Revista revistaExcluida = repositorioRevistas.SelecionarRevistaPorId(idSelecionado);
 
         bool conseguiuExcluir = repositorioRevistas.ExcluirRevista(idSelecionado);
         if (!conseguiuExcluir)
@@ -151,15 +151,15 @@ public class TelaRevistas
             "ID", "Título:", "N’ da Edição", "Ano da Publicação", "Status", "Caixa"
             );
 
-            Revistas[] revistasCadastradas = repositorioRevistas.SelecionarRevista();
+            Revista[] revistasCadastradas = repositorioRevistas.SelecionarRevista();
 
             for (int i = 0; i < revistasCadastradas.Length; i++)
             {
-                Revistas r = revistasCadastradas[i];
+                Revista r = revistasCadastradas[i];
 
                 if (r == null) continue;
 
-                string nomeCaixa = r.Caixa.Length > 0 ? r.Caixa[0].Etiqueta : "Sem Caixa";
+                string nomeCaixa = r.Caixa != null ? r.Caixa.Etiqueta : "Sem Caixa";
 
                 Console.ForegroundColor = (ConsoleColor)Enum.Parse(typeof(ConsoleColor), r.CorCaixa);
                 Console.WriteLine(
@@ -181,7 +181,7 @@ public class TelaRevistas
         Console.Write("Digite o novo status da revista (disponível, emprestada, reservada): ");
         string novoStatus = Console.ReadLine()!;
 
-        Revistas revista = repositorioRevistas.SelecionarRevistaPorId(idRevista);
+        Revista revista = repositorioRevistas.SelecionarRevistaPorId(idRevista);
 
         if (revista == null)
         {
@@ -200,7 +200,7 @@ public class TelaRevistas
         }
     }    
 
-    public Revistas ObterDadosRevista()
+    public Revista ObterDadosRevista()
     {
         string statusRevista = "Disponível";
 
@@ -214,27 +214,29 @@ public class TelaRevistas
         string anoPublicacao = Console.ReadLine()!;
 
         Console.WriteLine("\nCaixas disponíveis:");
-        Caixas[] caixas = repositorioCaixas.SelecionarCaixa();
+        Caixa[] caixas = repositorioCaixas.SelecionarCaixa();
         for (int i = 0; i < caixas.Length; i++)
         {
-            Caixas c = caixas[i];
+            Caixa c = caixas[i];
             if (c == null) continue;
             Console.WriteLine($"{c.Id} - {c.Etiqueta}");
         }
         Console.Write("Selecione o ID da caixa: ");
         int idCaixa = Convert.ToInt32(Console.ReadLine());
 
-        Caixas caixaSelecionada = repositorioCaixas.SelecionarCaixaPorId(idCaixa);
+        Caixa caixaSelecionada = repositorioCaixas.SelecionarCaixaPorId(idCaixa);
         if (caixaSelecionada == null)
         {
             Notificador.ExibirMensagem("Caixa não encontrada", ConsoleColor.Red);
 
-            Caixas caixaPadrao = RepositorioCaixas.CaixaPadrao;
+            Caixa caixaPadrao = RepositorioCaixa.CaixaPadrao;
 
             Notificador.ExibirMensagem($"Caixa padrão: {caixaPadrao.Etiqueta}", ConsoleColor.Yellow);
+
+            caixaSelecionada = caixaPadrao;
         }
 
-        Revistas novaRevista = new Revistas(nome, edicao, anoPublicacao, statusRevista, new Caixas[] { caixaSelecionada });
+        Revista novaRevista = new Revista(nome, edicao, anoPublicacao, statusRevista, caixaSelecionada);
 
         return novaRevista;
 

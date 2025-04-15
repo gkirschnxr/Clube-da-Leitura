@@ -11,16 +11,16 @@ public class Program
     {
         Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-        RepositorioAmigos repositorioAmigos = new RepositorioAmigos();
-        RepositorioCaixas repositorioCaixas = new RepositorioCaixas();
-        RepositorioRevistas repositorioRevistas = new RepositorioRevistas();
-        RepositorioEmprestimos repositorioEmprestimos = new RepositorioEmprestimos();
+        RepositorioAmigo repositorioAmigos = new RepositorioAmigo();
+        RepositorioCaixa repositorioCaixas = new RepositorioCaixa();
+        RepositorioRevista repositorioRevistas = new RepositorioRevista();
+        RepositorioEmprestimo repositorioEmprestimos = new RepositorioEmprestimo();
 
 
         TelaAmigos telaAmigos = new TelaAmigos(repositorioAmigos);
         TelaCaixas telaCaixas = new TelaCaixas(repositorioCaixas);
         TelaRevistas telaRevistas = new TelaRevistas(repositorioRevistas, repositorioCaixas);
-        TelaEmprestimos telaEmprestimos = new TelaEmprestimos(repositorioEmprestimos, repositorioAmigos, repositorioRevistas);
+        TelaEmprestimo telaEmprestimos = new TelaEmprestimo(repositorioEmprestimos, repositorioAmigos, repositorioRevistas, repositorioCaixas);
 
         TelaPrincipal telaPrincipal = new TelaPrincipal();
 
@@ -93,7 +93,7 @@ public class Program
 
                     case '2': telaEmprestimos.DevolucaoEmprestimo(); break;
 
-                    case '3': telaEmprestimos.VisualizarEmprestimo(); break;
+                    case '3': telaEmprestimos.VisualizarEmprestimo(false); break;
                 }
 
             }

@@ -1,16 +1,16 @@
 ﻿using ClubeDaLeitura.ConsoleApp.ModuloCaixas;
 
 namespace ClubeDaLeitura.ConsoleApp.ModuloRevistas;
-public class Revistas
+public class Revista
 {
     public int Id;
     public string Titulo;
     public string Edicao;
     public string AnoPublicacao;
     public string StatusRevista;
-    public Caixas[] Caixa; //obrigatorio
+    public Caixa Caixa; //obrigatorio
 
-    public Revistas(string titulo, string edicao, string anoPublicacao, string statusRevista, Caixas[] caixa)
+    public Revista(string titulo, string edicao, string anoPublicacao, string statusRevista, Caixa caixa)
     {
         Titulo = titulo;
         Edicao = edicao;
@@ -19,7 +19,7 @@ public class Revistas
         Caixa = caixa;
     }
 
-    public string CorCaixa => Caixa.Length > 0 ? Caixa[0].Cor : "15";
+    public string CorCaixa => Caixa != null ? Caixa.Cor : "15";
 
     public string Validar()
     {

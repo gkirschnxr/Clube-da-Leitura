@@ -2,22 +2,22 @@
 using ClubeDaLeitura.ConsoleApp.ModuloAmigos;
 
 namespace ClubeDaLeitura.ConsoleApp.ModuloCaixas;
-public class RepositorioCaixas
+public class RepositorioCaixa
 {
-    public Caixas[] caixas = new Caixas[100];
+    public Caixa[] caixas = new Caixa[100];
     public int contadorCaixas = 0;
 
-    public static Caixas CaixaPadrao = new Caixas("Padrão", "15", "7");
+    public static Caixa CaixaPadrao = new Caixa("Padrão", "15", DateTime.Now.AddDays(7));
 
-    public RepositorioCaixas()
+    public RepositorioCaixa()
     {
         CaixaPadrao.Id = GeradorDeIDs.GerarIdCaixas();
         caixas[contadorCaixas++] = CaixaPadrao;
     }
 
-    public void CadastrarCaixa(Caixas novaCaixa, string erros)
+    public void CadastrarCaixa(Caixa novaCaixa, string erros)
     {
-        foreach (Caixas caixa in caixas)
+        foreach (Caixa caixa in caixas)
         {
             if (caixa != null && caixa.Etiqueta == novaCaixa.Etiqueta)
             {
@@ -32,7 +32,7 @@ public class RepositorioCaixas
             }
         }
     }
-    public bool EditarCaixa(int idCaixa, Caixas editarCaixa)
+    public bool EditarCaixa(int idCaixa, Caixa editarCaixa)
     {
         for (int i = 0; i < caixas.Length; i++)
         {
@@ -62,16 +62,16 @@ public class RepositorioCaixas
         return false;
     }
 
-    public Caixas[] SelecionarCaixa()
+    public Caixa[] SelecionarCaixa()
     {
         return caixas;
     }
 
-    public Caixas SelecionarCaixaPorId(int idCaixa)
+    public Caixa SelecionarCaixaPorId(int idCaixa)
     {
         for (int i = 0; i < caixas.Length; i++)
         {
-            Caixas c = caixas[i];
+            Caixa c = caixas[i];
 
             if (c == null) continue;
 

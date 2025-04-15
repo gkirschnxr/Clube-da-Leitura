@@ -4,19 +4,19 @@ using ClubeDaLeitura.ConsoleApp.ModuloAmigos;
 using ClubeDaLeitura.ConsoleApp.ModuloCaixas;
 
 namespace ClubeDaLeitura.ConsoleApp.ModuloRevistas;
-public class RepositorioRevistas
+public class RepositorioRevista
 {
-    public Revistas[] revistas = new Revistas[100];
+    public Revista[] revistas = new Revista[100];
     public int contadorRevistas = 0;
 
-    public void CadastrarRevista(Revistas novaRevista)
+    public void CadastrarRevista(Revista novaRevista)
     {
         novaRevista.Id = GeradorDeIDs.GerarIdRevistas();
 
         revistas[contadorRevistas++] = novaRevista;
     }
 
-    public bool EditarRevista(int idRevista, Revistas editarRevista)
+    public bool EditarRevista(int idRevista, Revista editarRevista)
     {
         for (int i = 0; i < revistas.Length; i++)
         {
@@ -46,11 +46,11 @@ public class RepositorioRevistas
         return false;
     }
 
-    public Revistas SelecionarRevistaPorId(int idRevista)
+    public Revista SelecionarRevistaPorId(int idRevista)
     {
         for (int i = 0; i < revistas.Length; i++)
         {
-            Revistas r = revistas[i];
+            Revista r = revistas[i];
 
             if (r == null) continue;
 
@@ -59,16 +59,14 @@ public class RepositorioRevistas
         return null!;
     }
 
-    public Revistas[] SelecionarRevista()
+    public Revista[] SelecionarRevista()
     {
         return revistas;
     }
 
-    public Revistas StatusRevista(int idRevista, string novoStatus)
+    public Revista StatusRevista(int idRevista, string novoStatus)
     {
-        Revistas revista = SelecionarRevistaPorId(idRevista);
-        if (revista == null)
-           Console.WriteLine("Revista não encontrada.");
+        Revista revista = SelecionarRevistaPorId(idRevista);
 
         if (novoStatus == "disponível" || novoStatus == "emprestada" || novoStatus == "reservada")
         {
@@ -76,9 +74,7 @@ public class RepositorioRevistas
             Console.WriteLine($"Status da revista '{revista.Titulo}' alterado para '{novoStatus}'.");
         }
         else
-        {
             Console.WriteLine("Status inválido. Use: 'disponível', 'emprestada' ou 'reservada'.");
-        }
 
         return revista;
     }
